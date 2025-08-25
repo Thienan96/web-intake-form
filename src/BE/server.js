@@ -1,6 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const connectDB = require("./config/db");
+const connectDB = require("./config/init.mongodb");
 
 dotenv.config();
 const app = express();
@@ -9,7 +9,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static(process.env.UPLOAD_DIR || "./uploads"));
 
-connectDB();
+connectDB.connect();
 
 app.use((err, req, res, next) => {
   if (err instanceof multer.MulterError) {
