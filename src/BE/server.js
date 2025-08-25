@@ -1,6 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const connectDB = require("./config/database");
+const connectDB = require("./config/init.mongodb");
 const formRoutes = require("./routes/form");
 const step1Routes = require("./routes/step-1");
 const step2Routes = require("./routes/step-2");
@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static(process.env.UPLOAD_DIR || "./uploads"));
 
-connectDB();
+connectDB.connect();
 
 app.use(formRoutes);
 app.use(step1Routes);
