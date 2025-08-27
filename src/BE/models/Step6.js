@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
+const { v4: uuidv4 } = require("uuid");
 
 const step6Schema = new mongoose.Schema(
   {
-    formId: { type: String, required: true },
-    stepId: { type: String, required: true },
+    formId: { type: String, required: true, default: uuidv4 },
+    stepId: { type: String, required: true, default: uuidv4 },
     is_no_replacement_for_physician_consent: { type: Boolean, required: true },
     is_no_replacement_for_physician_consent_initial: {
       type: String,

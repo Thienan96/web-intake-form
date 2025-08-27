@@ -23,10 +23,7 @@ class Database {
         }`;
       }
 
-      this.connection = await mongoose.connect(uri, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      });
+      this.connection = await mongoose.connect(uri);
       console.log("MongoDB connected successfully");
       return this.connection;
     } catch (error) {

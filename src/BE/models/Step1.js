@@ -1,10 +1,11 @@
 const mongoose = require("mongoose");
 const { PHONE_REGEX, EMAIL_REGEX, POSTAL_REGEX } = require("./regex");
+const { v4: uuidv4 } = require("uuid");
 
 const step1Schema = new mongoose.Schema(
   {
-    formId: { type: String, required: true },
-    stepId: { type: String, required: true },
+    formId: { type: String, required: true, default: uuidv4 },
+    stepId: { type: String, required: true, default: uuidv4 },
     first_name: { type: String, required: true, minlength: 1, maxlength: 255 },
     last_name: { type: String, required: true, minlength: 1, maxlength: 255 },
     phone: { type: String, required: true, match: PHONE_REGEX },

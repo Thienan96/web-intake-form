@@ -1,24 +1,18 @@
 const express = require("express");
 const router = express.Router();
-const step2Service = require("../services/service-step-2");
+const step2Controller = require("../controllers/step-2");
 const upload = require("../middleware/upload");
 
+router.get("/step-2/:formId/:stepId", step2Controller.getFormData);
+router.post(
+  "/init-step-2",
+  upload.single("file"),
+  step2Controller.initFormData
+);
 router.post(
   "/step-2/:formId/:stepId",
   upload.single("file"),
-  async (req, res) => {
-    try {
-      const result = await step2Service.saveFormData(
-        req.params.formId,
-        req.params.stepId,
-        req.body,
-        req.file
-      );
-      res.json(result);
-    } catch (error) {
-      res.status(error.status || 500).json({ error: error.message });
-    }
-  }
+  step2Controller.saveFormData
 );
 
 module.exports = router;

@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
+const { v4: uuidv4 } = require("uuid");
 
 const step3Schema = new mongoose.Schema(
   {
-    formId: { type: String, required: true },
-    stepId: { type: String, required: true },
+    formId: { type: String, required: true, default: uuidv4 },
+    stepId: { type: String, required: true, default: uuidv4 },
     general: {
       fainting: { type: Boolean, default: false },
       headache: { type: Boolean, default: false },

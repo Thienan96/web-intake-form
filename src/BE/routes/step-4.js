@@ -1,18 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const step4Service = require("../services/service-step-4");
+const step4Controller = require("../controllers/step-4");
 
-router.post("/step-4/:formId/:stepId", async (req, res) => {
-  try {
-    const result = await step4Service.saveFormData(
-      req.params.formId,
-      req.params.stepId,
-      req.body
-    );
-    res.json(result);
-  } catch (error) {
-    res.status(error.status || 500).json({ error: error.message });
-  }
-});
+router.get("/step-4/:formId/:stepId", step4Controller.getFormData);
+router.post("/init-step-4", step4Controller.initFormData);
+router.post("/step-4/:formId/:stepId", step4Controller.saveFormData);
 
 module.exports = router;

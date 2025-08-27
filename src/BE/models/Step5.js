@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
+const { v4: uuidv4 } = require("uuid");
 
 const step5Schema = new mongoose.Schema(
   {
-    formId: { type: String, required: true },
-    stepId: { type: String, required: true },
+    formId: { type: String, required: true, default: uuidv4 },
+    stepId: { type: String, required: true, default: uuidv4 },
     physical_health_services: {
       erectile_dysfunction: {
         past: { type: Boolean, default: false },
