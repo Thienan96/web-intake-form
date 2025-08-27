@@ -8,6 +8,18 @@ const getFormData = async (formId, stepId) => {
   return { formData: stepData };
 };
 
+const initFormData = async (formData, file) => {
+  const newStep2 = await Step2.create({ ...formData });
+  if (file && formData.preferred_format === "digital") {
+    newStep2.summary_of_assesment_document_url = {
+      originalName: file.originalname,
+      url: `/uploads/${file.filename}`,
+    };
+    await newStep2.save();
+  }
+  return { path: `/step-3/${newStep2.formId}/${newStep2.stepId}` };
+};
+
 const saveFormData = async (formId, stepId, formData, file) => {
   if (file && formData.preferred_format === "digital") {
     formData.summary_of_assesment_document_url = {
@@ -25,4 +37,4 @@ const saveFormData = async (formId, stepId, formData, file) => {
   return { path: `/step-3/${formId}/${stepId}` };
 };
 
-module.exports = { getFormData, saveFormData };
+module.exports = { getFormData, initFormData, saveFormData };

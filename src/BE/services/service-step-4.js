@@ -8,6 +8,11 @@ const getFormData = async (formId, stepId) => {
   return { formData: stepData };
 };
 
+const initFormData = async (formData) => {
+  const newStep4 = await Step4.create({ ...formData });
+  return { path: `/step-5/${newStep4.formId}/${newStep4.stepId}` };
+};
+
 const saveFormData = async (formId, stepId, formData) => {
   await Step4.findOneAndUpdate(
     { formId, stepId },
@@ -18,4 +23,4 @@ const saveFormData = async (formId, stepId, formData) => {
   return { path: `/step-5/${formId}/${stepId}` };
 };
 
-module.exports = { getFormData, saveFormData };
+module.exports = { getFormData, initFormData, saveFormData };

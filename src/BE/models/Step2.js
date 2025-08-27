@@ -1,10 +1,11 @@
 const mongoose = require("mongoose");
 const { PHONE_REGEX, MEDAVIE_REGEX } = require("./regex");
+const { v4: uuidv4 } = require("uuid");
 
 const step2Schema = new mongoose.Schema(
   {
-    formId: { type: String, required: true },
-    stepId: { type: String, required: true },
+    formId: { type: String, required: true, default: uuidv4 },
+    stepId: { type: String, required: true, default: uuidv4 },
     veteran: {
       is_vet: { type: Boolean, default: false },
       is_active: { type: Boolean, default: false },

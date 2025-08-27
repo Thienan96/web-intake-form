@@ -9,9 +9,13 @@ const getFormData = async (formId, stepId) => {
   return { formData: stepData };
 };
 
-const saveFormData = async (formId, stepId, formData) => {
-  await Form.findOneAndUpdate({ formId }, { formId }, { upsert: true });
+const initFormData = async (formData) => {
+  const newForm = await Form.create({});
+  const newStep1 = await Step1.create({ ...formData, formId: newForm.formId });
+  return { path: `/step-2/${newForm.formId}/${newStep1.stepId}` };
+};
 
+const saveFormData = async (formId, stepId, formData) => {
   await Step1.findOneAndUpdate(
     { formId, stepId },
     { ...formData, formId, stepId },
@@ -21,4 +25,4 @@ const saveFormData = async (formId, stepId, formData) => {
   return { path: `/step-2/${formId}/${stepId}` };
 };
 
-module.exports = { getFormData, saveFormData };
+module.exports = { getFormData, initFormData, saveFormData };

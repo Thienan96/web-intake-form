@@ -1,0 +1,37 @@
+const step4Service = require("../services/service-step-4");
+
+const getFormData = async (req, res) => {
+  try {
+    const result = await step4Service.getFormData(
+      req.params.formId,
+      req.params.stepId
+    );
+    res.json(result);
+  } catch (error) {
+    res.status(error.status || 500).json({ error: error.message });
+  }
+};
+
+const initFormData = async (req, res) => {
+  try {
+    const result = await step4Service.initFormData(req.body);
+    res.json(result);
+  } catch (error) {
+    res.status(error.status || 500).json({ error: error.message });
+  }
+};
+
+const saveFormData = async (req, res) => {
+  try {
+    const result = await step4Service.saveFormData(
+      req.params.formId,
+      req.params.stepId,
+      req.body
+    );
+    res.json(result);
+  } catch (error) {
+    res.status(error.status || 500).json({ error: error.message });
+  }
+};
+
+module.exports = { getFormData, initFormData, saveFormData };

@@ -8,7 +8,7 @@ const step3Routes = require("./routes/step-3");
 const step4Routes = require("./routes/step-4");
 const step5Routes = require("./routes/step-5");
 const step6Routes = require("./routes/step-6");
-const thankyouRoutes = require("./routes/step-thankyou");
+const thankyouRoutes = require("./routes/thankyou");
 
 dotenv.config();
 const app = express();
