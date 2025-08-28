@@ -31,7 +31,7 @@ router.get("/loader.js", (req, res) => {
           link.rel = "stylesheet";
   
           var script3 = document.createElement("script");
-          script3.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCFyKAWfG9Sp6EFTEhZJWVaDrHilnqea1I&libraries=places"; 
+          script3.src = "https://maps.googleapis.com/maps/api/js?key=''&libraries=places"; 
           script3.async = true;
   
           document.body.appendChild(script);
