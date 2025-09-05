@@ -3,21 +3,9 @@ const Step2 = require("../models/Step2");
 const getFormData = async (formId, stepId) => {
   const stepData = await Step2.findOne({ formId, stepId });
   if (!stepData) {
-    throw { status: 404, message: "Form data not found" };
+    await Step2.create({ formId });
   }
   return { formData: stepData };
-};
-
-const initFormData = async (formData, file) => {
-  const newStep2 = await Step2.create({ ...formData });
-  if (file && formData.preferred_format === "digital") {
-    newStep2.summary_of_assesment_document_url = {
-      originalName: file.originalname,
-      url: `/uploads/${file.filename}`,
-    };
-    await newStep2.save();
-  }
-  return { path: `/step-3/${newStep2.formId}/${newStep2.stepId}` };
 };
 
 const saveFormData = async (formId, stepId, formData, file) => {
@@ -37,4 +25,4 @@ const saveFormData = async (formId, stepId, formData, file) => {
   return { path: `/step-3/${formId}/${stepId}` };
 };
 
-module.exports = { getFormData, initFormData, saveFormData };
+module.exports = { getFormData, saveFormData };
