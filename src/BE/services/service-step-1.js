@@ -7,7 +7,7 @@ const getFormData = async (formId, stepId) => {
   if (!stepData) {
     throw { status: 404, message: "Form data not found" };
   }
-  return { stepData };
+  return { formData: stepData };
 };
 
 const initFormData = async (formData) => {

@@ -1,12 +1,14 @@
+const Step3 = require("../models/Step3");
 const Step4 = require("../models/Step4");
 const Step5 = require("../models/Step5");
 
 const getFormData = async (formId, stepId) => {
   const stepData = await Step4.findOne({ formId, stepId });
+  const prevStep3 = await Step3.findOne({ formId });
   if (!stepData) {
     throw { status: 404, message: "Form data not found" };
   }
-  return { stepData };
+  return { formData: stepData, prevStepId: prevStep3.stepId };
 };
 
 const saveFormData = async (formId, stepId, formData) => {
