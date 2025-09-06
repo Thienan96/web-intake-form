@@ -1,11 +1,12 @@
 const Step4 = require("../models/Step4");
+const Step5 = require("../models/Step5");
 
 const getFormData = async (formId, stepId) => {
   const stepData = await Step4.findOne({ formId, stepId });
   if (!stepData) {
-    await Step4.create({ formId });
+    throw { status: 404, message: "Form data not found" };
   }
-  return { formData: stepData };
+  return { stepData };
 };
 
 const saveFormData = async (formId, stepId, formData) => {
@@ -15,7 +16,8 @@ const saveFormData = async (formId, stepId, formData) => {
     { upsert: true, new: true }
   );
 
-  return { path: `/step-5/${formId}/${stepId}` };
+  const newStep5 = await Step5.create({ formId });
+  return { path: `/step-5/${formId}/${newStep5.stepId}` };
 };
 
 module.exports = { getFormData, saveFormData };

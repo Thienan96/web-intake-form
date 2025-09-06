@@ -3,9 +3,9 @@ const Step6 = require("../models/Step6");
 const getFormData = async (formId, stepId) => {
   const stepData = await Step6.findOne({ formId, stepId });
   if (!stepData) {
-    await Step6.create({ formId });
+    throw { status: 404, message: "Form data not found" };
   }
-  return { formData: stepData };
+  return { stepData };
 };
 
 const saveFormData = async (formId, stepId, formData, file) => {

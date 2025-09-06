@@ -5,10 +5,11 @@ const step6Schema = new mongoose.Schema(
   {
     formId: { type: String, required: true, default: uuidv4 },
     stepId: { type: String, required: true, default: uuidv4 },
-    is_no_replacement_for_physician_consent: { type: Boolean, required: true },
+    is_no_replacement_for_physician_consent: {
+      type: Boolean,
+    },
     is_no_replacement_for_physician_consent_initial: {
       type: String,
-      required: true,
       minlength: 1,
       maxlength: 255,
     },
