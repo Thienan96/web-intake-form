@@ -6,7 +6,7 @@ const getFormData = async (req, res) => {
       req.params.formId,
       req.params.stepId
     );
-    res.json(result);
+    res.json(result.formData);
   } catch (error) {
     res.status(error.status || 500).json({ error: error.message });
   }

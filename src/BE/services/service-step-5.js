@@ -18,7 +18,11 @@ const saveFormData = async (formId, stepId, formData) => {
     { upsert: true, new: true }
   );
 
-  const newStep6 = await Step6.create({ formId });
+  const newStep6 = await Step6.findOneAndUpdate(
+    { formId },
+    { $setOnInsert: { formId } },
+    { upsert: true, new: true }
+  );
   return { path: `/step-6/${formId}/${newStep6.stepId}` };
 };
 

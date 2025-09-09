@@ -12,8 +12,17 @@ const getFormData = async (formId, stepId) => {
 
 const initFormData = async (formData) => {
   const newForm = await Form.create({});
-  await Step1.create({ ...formData, formId: newForm.formId });
-  const newStep2 = await Step2.create({ formId: newForm.formId });
+  const birthday = new Date(
+    parseInt(formData.year),
+    parseInt(formData.month),
+    parseInt(formData.day)
+  );
+  await Step1.create({ ...formData, birthday, formId: newForm.formId });
+  const newStep2 = await Step2.findOneAndUpdate(
+    { formId: newForm.formId },
+    { $setOnInsert: { formId: newForm.formId } },
+    { upsert: true, new: true }
+  );
   return { path: `/step-2/${newForm.formId}/${newStep2.stepId}` };
 };
 
@@ -24,7 +33,11 @@ const saveFormData = async (formId, stepId, formData) => {
     { upsert: true, new: true }
   );
 
-  const newStep2 = await Step2.create({ formId });
+  const newStep2 = await Step2.findOneAndUpdate(
+    { formId },
+    { $setOnInsert: { formId } },
+    { upsert: true, new: true }
+  );
   return { path: `/step-2/${formId}/${newStep2.stepId}` };
 };
 
