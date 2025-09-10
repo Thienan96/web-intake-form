@@ -12,15 +12,6 @@ const getFormData = async (req, res) => {
   }
 };
 
-const initFormData = async (req, res) => {
-  try {
-    const result = await step4Service.initFormData(req.body);
-    res.json(result);
-  } catch (error) {
-    res.status(error.status || 500).json({ error: error.message });
-  }
-};
-
 const saveFormData = async (req, res) => {
   try {
     const result = await step4Service.saveFormData(
@@ -34,4 +25,4 @@ const saveFormData = async (req, res) => {
   }
 };
 
-module.exports = { getFormData, initFormData, saveFormData };
+module.exports = { getFormData, saveFormData };

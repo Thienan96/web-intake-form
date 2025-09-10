@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const dotenv = require("dotenv");
 const cors = require("cors");
+const multer = require("multer");
 const connectDB = require("./BE/config/init.mongodb");
 const formRoutes = require("./BE/routes/form");
 const step1Routes = require("./BE/routes/step-1");
@@ -20,6 +21,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static(process.env.UPLOAD_DIR || "./uploads"));
 
 // connectDB.connect();
+connectDB.connect();
+
 app.use("", require("./BE/routes/index"));
 app.use(formRoutes);
 app.use(step1Routes);
@@ -35,35 +38,37 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "BE/views"));
 
 const corsOptions = {
-  origin: '*',
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
-  optionsSuccessStatus: 200
+  optionsSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
-app.use(express.static(path.join(__dirname, 'public'), {
-  setHeaders: (res, path) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
-    if (path.endsWith('.css')) {
-      res.setHeader('Content-Type', 'text/css');
-    }
-  }
-}));
+app.use(
+  express.static(path.join(__dirname, "public"), {
+    setHeaders: (res, path) => {
+      res.setHeader("Access-Control-Allow-Origin", "*");
+      res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
+      if (path.endsWith(".css")) {
+        res.setHeader("Content-Type", "text/css");
+      }
+    },
+  })
+);
 // Global CORS headers
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Cross-Origin-Resource-Policy', 'cross-origin');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  if (req.method === 'OPTIONS') {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Cross-Origin-Resource-Policy", "cross-origin");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  if (req.method === "OPTIONS") {
     return res.sendStatus(200);
   }
   next();
 });
 app.use((req, res, next) => {
-  res.render("index", {host: 'http://localhost:3000'});
+  res.render("index", { host: "http://localhost:3000" });
 });
 app.use((err, req, res, next) => {
   if (err instanceof multer.MulterError) {

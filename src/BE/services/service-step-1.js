@@ -1,4 +1,5 @@
 const Step1 = require("../models/Step1");
+const Step2 = require("../models/Step2");
 const Form = require("../models/Form");
 
 const getFormData = async (formId, stepId) => {
@@ -11,8 +12,18 @@ const getFormData = async (formId, stepId) => {
 
 const initFormData = async (formData) => {
   const newForm = await Form.create({});
-  const newStep1 = await Step1.create({ ...formData, formId: newForm.formId });
-  return { path: `/step-2/${newForm.formId}/${newStep1.stepId}` };
+  const birthday = new Date(
+    parseInt(formData.year),
+    parseInt(formData.month),
+    parseInt(formData.day)
+  );
+  await Step1.create({ ...formData, birthday, formId: newForm.formId });
+  const newStep2 = await Step2.findOneAndUpdate(
+    { formId: newForm.formId },
+    { $setOnInsert: { formId: newForm.formId } },
+    { upsert: true, new: true }
+  );
+  return { path: `/step-2/${newForm.formId}/${newStep2.stepId}` };
 };
 
 const saveFormData = async (formId, stepId, formData) => {
@@ -22,7 +33,12 @@ const saveFormData = async (formId, stepId, formData) => {
     { upsert: true, new: true }
   );
 
-  return { path: `/step-2/${formId}/${stepId}` };
+  const newStep2 = await Step2.findOneAndUpdate(
+    { formId },
+    { $setOnInsert: { formId } },
+    { upsert: true, new: true }
+  );
+  return { path: `/step-2/${formId}/${newStep2.stepId}` };
 };
 
 module.exports = { getFormData, initFormData, saveFormData };

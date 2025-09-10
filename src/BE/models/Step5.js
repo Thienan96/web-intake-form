@@ -6,12 +6,12 @@ const step5Schema = new mongoose.Schema(
     formId: { type: String, required: true, default: uuidv4 },
     stepId: { type: String, required: true, default: uuidv4 },
     physical_health_services: {
-      erectile_dysfunction: {
+      shockwave_for_ed: {
         past: { type: Boolean, default: false },
         current: { type: Boolean, default: false },
         interested: { type: Boolean, default: false },
       },
-      chronic_pain: {
+      shockwave_for_chronic_pain: {
         past: { type: Boolean, default: false },
         current: { type: Boolean, default: false },
         interested: { type: Boolean, default: false },
@@ -70,7 +70,7 @@ const step5Schema = new mongoose.Schema(
       },
     },
     products: {
-      orthotics: {
+      custom_orthotics: {
         past: { type: Boolean, default: false },
         current: { type: Boolean, default: false },
         interested: { type: Boolean, default: false },
@@ -91,7 +91,7 @@ const step5Schema = new mongoose.Schema(
         interested: { type: Boolean, default: false },
       },
     },
-    orthopedic_bracing: {
+    orthopaedic_bracing: {
       neck_brace: {
         past: { type: Boolean, default: false },
         current: { type: Boolean, default: false },
@@ -112,12 +112,12 @@ const step5Schema = new mongoose.Schema(
         current: { type: Boolean, default: false },
         interested: { type: Boolean, default: false },
       },
-      wrist_brace: {
+      wrist_hand_brace: {
         past: { type: Boolean, default: false },
         current: { type: Boolean, default: false },
         interested: { type: Boolean, default: false },
       },
-      hip_brace: {
+      hip_pelvis_brace: {
         past: { type: Boolean, default: false },
         current: { type: Boolean, default: false },
         interested: { type: Boolean, default: false },
@@ -127,7 +127,7 @@ const step5Schema = new mongoose.Schema(
         current: { type: Boolean, default: false },
         interested: { type: Boolean, default: false },
       },
-      ankle_brace: {
+      ankle_foot_brace: {
         past: { type: Boolean, default: false },
         current: { type: Boolean, default: false },
         interested: { type: Boolean, default: false },
