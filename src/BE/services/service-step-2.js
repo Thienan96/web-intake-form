@@ -12,7 +12,7 @@ const getFormData = async (formId, stepId) => {
 };
 
 const saveFormData = async (formId, stepId, formData, file) => {
-  let summary_of_assesment_document_url = "";
+  let summary_of_assesment_document_url = {};
   if (file && formData.preferred_format === "digital") {
     summary_of_assesment_document_url = {
       originalName: file.originalname,
