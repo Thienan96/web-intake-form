@@ -6,10 +6,14 @@ const step2Schema = new mongoose.Schema(
   {
     formId: { type: String, required: true, default: uuidv4 },
     stepId: { type: String, required: true, default: uuidv4 },
-    veteran_is_vet: { type: Boolean, default: false },
-    veteran_is_rcmp: { type: Boolean, default: false },
-    active_is_vet: { type: Boolean, default: false },
-    active_is_rcmp: { type: Boolean, default: false },
+    veteran: {
+      is_vet: { type: Boolean, default: false },
+      is_active: { type: Boolean, default: false },
+    },
+    rcmp: {
+      is_vet: { type: Boolean, default: false },
+      is_active: { type: Boolean, default: false },
+    },
     medavie_bluecross_k: { type: String, match: MEDAVIE_REGEX, default: "" },
     regiment: { type: String, maxlength: 255 },
     disability_award: { type: String },

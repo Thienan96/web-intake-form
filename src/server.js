@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const dotenv = require("dotenv");
 const cors = require("cors");
+const multer = require("multer");
 const connectDB = require("./BE/config/init.mongodb");
 const formRoutes = require("./BE/routes/form");
 const step1Routes = require("./BE/routes/step-1");

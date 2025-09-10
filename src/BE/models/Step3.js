@@ -13,7 +13,7 @@ const step3Schema = new mongoose.Schema(
       is_paralysis: { type: Boolean, default: false },
     },
     infections: {
-      is_athletes_foot: { type: Boolean, default: false },
+      is_athlete_foot: { type: Boolean, default: false },
       is_hepatitis: { type: Boolean, default: false },
       is_hiv: { type: Boolean, default: false },
       is_tuberculosis: { type: Boolean, default: false },

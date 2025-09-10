@@ -10,6 +10,7 @@ const step6Schema = new mongoose.Schema(
     },
     is_no_replacement_for_physician_consent_initial: {
       type: String,
+      required: true,
       minlength: 1,
       maxlength: 255,
     },
