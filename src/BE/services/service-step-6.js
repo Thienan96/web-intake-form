@@ -11,8 +11,9 @@ const getFormData = async (formId, stepId) => {
 };
 
 const saveFormData = async (formId, stepId, formData, file) => {
+  let signature_url = {};
   if (file) {
-    formData.signature_url = {
+    signature_url = {
       originalName: file.originalname,
       url: `/uploads/${file.filename}`,
     };
@@ -20,7 +21,7 @@ const saveFormData = async (formId, stepId, formData, file) => {
 
   await Step6.findOneAndUpdate(
     { formId, stepId },
-    { ...formData, formId, stepId },
+    { ...formData, signature_url, formId, stepId },
     { upsert: true, new: true }
   );
 
