@@ -12,6 +12,7 @@ const step4Routes = require("./BE/routes/step-4");
 const step5Routes = require("./BE/routes/step-5");
 const step6Routes = require("./BE/routes/step-6");
 const thankyouRoutes = require("./BE/routes/thankyou");
+const exportRoutes = require("./BE/routes/export");
 
 dotenv.config();
 const app = express();
@@ -20,7 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static(process.env.UPLOAD_DIR || "./uploads"));
 
-// connectDB.connect();
+// Connect Database;
 connectDB.connect();
 
 app.use("", require("./BE/routes/index"));
@@ -32,6 +33,7 @@ app.use(step4Routes);
 app.use(step5Routes);
 app.use(step6Routes);
 app.use(thankyouRoutes);
+app.use(exportRoutes);
 
 // Set up EJS as the view engine
 app.set("view engine", "ejs");
