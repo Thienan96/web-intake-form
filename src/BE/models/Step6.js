@@ -16,7 +16,7 @@ const step6Schema = new mongoose.Schema(
     },
     signature_url: {
       originalName: { type: String },
-      url: { type: String },
+      fileId: { type: mongoose.Schema.Types.ObjectId },
     },
   },
   { timestamps: true }
