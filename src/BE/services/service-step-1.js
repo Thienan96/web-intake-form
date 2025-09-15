@@ -1,11 +1,20 @@
 const Step1 = require("../models/Step1");
 const Step2 = require("../models/Step2");
 const Form = require("../models/Form");
-
+const {
+  BadRequestError
+} = require("../core/error.response");
 const getFormData = async (formId, stepId) => {
   const stepData = await Step1.findOne({ formId, stepId });
   if (!stepData) {
     throw { status: 404, message: "Form data not found" };
+  }
+  return { formData: stepData };
+};
+const getFormData2 = async (formId, stepId) => {
+  const stepData = await Step1.findOne({ formId, stepId });
+  if (!stepData) {
+    throw new BadRequestError("Form data not found");
   }
   return { formData: stepData };
 };
@@ -41,4 +50,4 @@ const saveFormData = async (formId, stepId, formData) => {
   return { path: `/step-2/${formId}/${newStep2.stepId}` };
 };
 
-module.exports = { getFormData, initFormData, saveFormData };
+module.exports = { getFormData, initFormData, saveFormData, getFormData2 };

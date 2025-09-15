@@ -1,5 +1,14 @@
 const step1Service = require("../services/service-step-1");
-
+const { SUCCESS } = require("../core/success.response");
+const getFormDataV2 = async (req, res) => {
+  new SUCCESS({
+    message: "Get form successfully",
+    metadata: await step1Service.getFormData2(
+      req.params.formId,
+      req.params.stepId
+    ),
+  }).send(res);
+};
 const getFormData = async (req, res) => {
   try {
     const result = await step1Service.getFormData(
@@ -34,4 +43,4 @@ const saveFormData = async (req, res) => {
   }
 };
 
-module.exports = { getFormData, initFormData, saveFormData };
+module.exports = { getFormData, initFormData, saveFormData, getFormDataV2 };
