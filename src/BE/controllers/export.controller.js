@@ -1,4 +1,4 @@
-const exportService = require("../services/service-export");
+const exportService = require("../services/export.service");
 const path = require("path");
 
 const exportFormToPDF = async (req, res) => {

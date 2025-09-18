@@ -1,4 +1,4 @@
-const formService = require("../services/service-form");
+const formService = require("../services/form.service");
 
 const getAllFormData = async (req, res) => {
   try {

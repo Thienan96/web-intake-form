@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const step1Controller = require("../controllers/step-1");
+const step1Controller = require("../controllers/step-1.controller");
 
 router.get("/step-1/:formId/:stepId", step1Controller.getFormData);
 router.post("/init-step-1", step1Controller.initFormData);

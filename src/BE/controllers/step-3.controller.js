@@ -1,20 +1,11 @@
-const step1Service = require("../services/service-step-1");
+const step3Service = require("../services/step-3.service");
 
 const getFormData = async (req, res) => {
   try {
-    const result = await step1Service.getFormData(
+    const result = await step3Service.getFormData(
       req.params.formId,
       req.params.stepId
     );
-    res.json(result.formData);
-  } catch (error) {
-    res.status(error.status || 500).json({ error: error.message });
-  }
-};
-
-const initFormData = async (req, res) => {
-  try {
-    const result = await step1Service.initFormData(req.body);
     res.json(result);
   } catch (error) {
     res.status(error.status || 500).json({ error: error.message });
@@ -23,7 +14,7 @@ const initFormData = async (req, res) => {
 
 const saveFormData = async (req, res) => {
   try {
-    const result = await step1Service.saveFormData(
+    const result = await step3Service.saveFormData(
       req.params.formId,
       req.params.stepId,
       req.body
@@ -34,4 +25,4 @@ const saveFormData = async (req, res) => {
   }
 };
 
-module.exports = { getFormData, initFormData, saveFormData };
+module.exports = { getFormData, saveFormData };

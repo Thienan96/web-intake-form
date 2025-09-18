@@ -1,4 +1,4 @@
-const step6Service = require("../services/service-step-6");
+const step6Service = require("../services/step-6.service");
 
 const getFormData = async (req, res) => {
   try {

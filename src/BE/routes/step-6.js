@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const step6Controller = require("../controllers/step-6");
+const step6Controller = require("../controllers/step-6.controller");
 const upload = require("../middleware/upload");
 
 router.get("/step-6/:formId/:stepId", step6Controller.getFormData);
