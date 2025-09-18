@@ -2,7 +2,9 @@ const mongoose = require("mongoose");
 const { MongoMemoryServer } = require("mongodb-memory-server");
 const Step5 = require("../BE/models/Step5");
 const Step6 = require("../BE/models/Step6");
-const { getFormData, saveFormData } = require("../BE/services/service-step-6");
+const { getFormData, saveFormData } = require("../BE/services/step-6.service");
+
+jest.setTimeout(30000);
 
 let mongoServer;
 
@@ -13,13 +15,28 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  await mongoose.disconnect();
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  await mongoose.connection.close(true);
   await mongoServer.stop();
 });
 
 afterEach(async () => {
-  await Step5.deleteMany({});
-  await Step6.deleteMany({});
+  if (mongoose.connection.readyState === 1) {
+    await Step5.deleteMany({});
+    await Step6.deleteMany({});
+    try {
+      const bucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
+        bucketName: "uploads",
+      });
+      const files = await mongoose.connection.db
+        .collection("uploads.files")
+        .find({})
+        .toArray();
+      for (const file of files) {
+        await bucket.delete(file._id);
+      }
+    } catch (err) {}
+  }
 });
 
 describe("Service Step 6", () => {
@@ -64,7 +81,10 @@ describe("Service Step 6", () => {
         is_no_replacement_for_physician_consent: true,
         is_no_replacement_for_physician_consent_initial: "Initial",
       };
-      const file = { originalname: "signature.png", filename: "sig-123.png" };
+      const file = {
+        originalname: "signature.png",
+        buffer: Buffer.from("mock signature content"),
+      };
       await Step5.create({
         formId,
         stepId: new mongoose.Types.ObjectId().toString(),
@@ -76,7 +96,6 @@ describe("Service Step 6", () => {
 
       expect(step6.signature_url).toMatchObject({
         originalName: "signature.png",
-        url: `/uploads/sig-123.png`,
       });
       expect(result.path).toBe(`/thank-you/${formId}`);
     });

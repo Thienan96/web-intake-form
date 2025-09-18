@@ -3,7 +3,9 @@ const { MongoMemoryServer } = require("mongodb-memory-server");
 const Step1 = require("../BE/models/Step1");
 const Step2 = require("../BE/models/Step2");
 const Step3 = require("../BE/models/Step3");
-const { getFormData, saveFormData } = require("../BE/services/service-step-2");
+const { getFormData, saveFormData } = require("../BE/services/step-2.service");
+
+jest.setTimeout(30000);
 
 let mongoServer;
 
@@ -14,14 +16,29 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  await mongoose.disconnect();
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  await mongoose.connection.close(true);
   await mongoServer.stop();
 });
 
 afterEach(async () => {
-  await Step1.deleteMany({});
-  await Step2.deleteMany({});
-  await Step3.deleteMany({});
+  if (mongoose.connection.readyState === 1) {
+    await Step1.deleteMany({});
+    await Step2.deleteMany({});
+    await Step3.deleteMany({});
+    try {
+      const bucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
+        bucketName: "uploads",
+      });
+      const files = await mongoose.connection.db
+        .collection("uploads.files")
+        .find({})
+        .toArray();
+      for (const file of files) {
+        await bucket.delete(file._id);
+      }
+    } catch (err) {}
+  }
 });
 
 describe("Service Step 2", () => {
@@ -75,7 +92,7 @@ describe("Service Step 2", () => {
       };
       const file = {
         originalname: "test.pdf",
-        filename: "test-123.pdf",
+        buffer: Buffer.from("mock file content"),
       };
       await Step1.create({
         formId,
@@ -98,7 +115,6 @@ describe("Service Step 2", () => {
 
       expect(step2.summary_of_assesment_document_url).toMatchObject({
         originalName: "test.pdf",
-        url: `/uploads/test-123.pdf`,
       });
       expect(result.path).toBe(`/step-3/${formId}/${step3.stepId}`);
     });

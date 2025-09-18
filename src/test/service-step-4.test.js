@@ -3,7 +3,7 @@ const { MongoMemoryServer } = require("mongodb-memory-server");
 const Step3 = require("../BE/models/Step3");
 const Step4 = require("../BE/models/Step4");
 const Step5 = require("../BE/models/Step5");
-const { getFormData, saveFormData } = require("../BE/services/service-step-4");
+const { getFormData, saveFormData } = require("../BE/services/step-4.service");
 
 let mongoServer;
 
