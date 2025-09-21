@@ -25,7 +25,7 @@ const step2Schema = new mongoose.Schema(
     summary_of_assesment: { type: String },
     summary_of_assesment_document_url: {
       originalName: { type: String },
-      url: { type: String },
+      fileId: { type: mongoose.Schema.Types.ObjectId },
     },
     emergency_contact_name: { type: String, maxlength: 255 },
     emergency_contact_phone: { type: String, match: PHONE_REGEX },

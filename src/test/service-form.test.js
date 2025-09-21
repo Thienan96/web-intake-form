@@ -7,7 +7,7 @@ const Step3 = require("../BE/models/Step3");
 const Step4 = require("../BE/models/Step4");
 const Step5 = require("../BE/models/Step5");
 const Step6 = require("../BE/models/Step6");
-const { getAllFormData } = require("../BE/services/service-form");
+const { getAllFormData } = require("../BE/services/form.service");
 
 let mongoServer;
 

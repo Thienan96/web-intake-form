@@ -1,4 +1,3 @@
-const step1Service = require("../services/service-step-1");
 const { SUCCESS } = require("../core/success.response");
 const getFormDataV2 = async (req, res) => {
   new SUCCESS({
@@ -9,6 +8,8 @@ const getFormDataV2 = async (req, res) => {
     ),
   }).send(res);
 };
+const step1Service = require("../services/step-1.service");
+
 const getFormData = async (req, res) => {
   try {
     const result = await step1Service.getFormData(

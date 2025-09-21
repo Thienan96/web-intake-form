@@ -1,5 +1,4 @@
-// controllers/step-2.js
-const step2Service = require("../services/service-step-2");
+const step2Service = require("../services/step-2.service");
 
 const getFormData = async (req, res) => {
   try {

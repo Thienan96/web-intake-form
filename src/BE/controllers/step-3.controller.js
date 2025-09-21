@@ -1,8 +1,8 @@
-const step5Service = require("../services/service-step-5");
+const step3Service = require("../services/step-3.service");
 
 const getFormData = async (req, res) => {
   try {
-    const result = await step5Service.getFormData(
+    const result = await step3Service.getFormData(
       req.params.formId,
       req.params.stepId
     );
@@ -14,7 +14,7 @@ const getFormData = async (req, res) => {
 
 const saveFormData = async (req, res) => {
   try {
-    const result = await step5Service.saveFormData(
+    const result = await step3Service.saveFormData(
       req.params.formId,
       req.params.stepId,
       req.body
